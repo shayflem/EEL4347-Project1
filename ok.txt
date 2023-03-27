@@ -1,0 +1,43 @@
+//matlab
+function [x3, y3] = ecc_point_addition(x1, y1, x2, y2, a, p)
+% This function performs point addition for an elliptic curve y^2 = x^3 + ax + b mod p
+
+if (x1 == x2 && y1 == y2)
+    % Point doubling
+    s = mod((3 * x1^2 + a) * modinv(2 * y1, p), p);
+else
+    % Point addition
+    s = mod((y2 - y1) * modinv(x2 - x1, p), p);
+end
+
+x3 = mod(s^2 - x1 - x2, p);
+y3 = mod(s * (x1 - x3) - y1, p);
+
+end
+
+function inv = modinv(a, p)
+% This function computes the modular inverse of a mod p using the extended Euclidean algorithm
+[a, p, gcd, x, ~] = extended_euclidean(a, p);
+if gcd ~= 1
+    error('The modular inverse does not exist');
+end
+inv = mod(x, p);
+
+end
+
+function [a, b, gcd, x, y] = extended_euclidean(a, b)
+% This function computes the extended Euclidean algorithm for a and b
+
+if b == 0
+    a = abs(a);
+    b = abs(b);
+    gcd = a;
+    x = 1;
+    y = 0;
+else
+    [a, b, gcd, x1, y1] = extended_euclidean(b, mod(a, b));
+    x = y1;
+    y = x1 - y1 * floor(a/b);
+end
+
+end
