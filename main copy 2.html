@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>ECC Addition</title>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/flot/0.8.3/jquery.flot.js"></script>
+	<script type="text/javascript" src="ec.js"></script>
+	<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro%3A400%2C700%2C900%2C400italic%2C700italic%2C900italic&amp;subset=latin%2Clatin-ext">
+	<link rel="stylesheet" type="text/css" href="ec.css">
+  </head>
+
+  <body data-new-gr-c-s-check-loaded="14.1102.0" data-gr-ext-installed="">
+    <header>
+      <h1>ElCC Addition (ℝ)</h1>
+      <nav>
+        <ul>
+          <li class="field">ℝ</li>
+          <li><a href="reals-add.html" class="active">Addition</a></li>
+          <li><a href="reals-mul.html">Multiplication</a></li>
+          <li class="field">𝔽<sub>p</sub></li>
+          <li><a href="modk-add.html">Addition</a></li>
+          <li><a href="modk-mul.html">Multiplication</a></li>
+        </ul>
+      </nav>
+    </header>
+    <main>
+      <div id="plot" class="box" style="padding: 0px; position: relative;"><canvas class="flot-base" width="600" height="600" style="direction: ltr; position: absolute; left: 0px; top: 0px; width: 600px; height: 600px;"></canvas><div class="flot-text" style="position: absolute; inset: 0px; font-size: smaller; color: rgb(84, 84, 84);"><div class="flot-x-axis flot-x1-axis xAxis x1Axis" style="position: absolute; inset: 0px; display: block;"><div class="flot-tick-label tickLabel" style="position: absolute; max-width: 46px; top: 573px; left: 306px; text-align: center;">0</div><div class="flot-tick-label tickLabel" style="position: absolute; max-width: 46px; top: 573px; left: 360px; text-align: center;">1</div><div class="flot-tick-label tickLabel" style="position: absolute; max-width: 46px; top: 573px; left: 415px; text-align: center;">2</div><div class="flot-tick-label tickLabel" style="position: absolute; max-width: 46px; top: 573px; left: 470px; text-align: center;">3</div><div class="flot-tick-label tickLabel" style="position: absolute; max-width: 46px; top: 573px; left: 524px; text-align: center;">4</div><div class="flot-tick-label tickLabel" style="position: absolute; max-width: 46px; top: 573px; left: 579px; text-align: center;">5</div><div class="flot-tick-label tickLabel" style="position: absolute; max-width: 46px; top: 573px; left: 29px; text-align: center;">-5</div><div class="flot-tick-label tickLabel" style="position: absolute; max-width: 46px; top: 573px; left: 84px; text-align: center;">-4</div><div class="flot-tick-label tickLabel" style="position: absolute; max-width: 46px; top: 573px; left: 138px; text-align: center;">-3</div><div class="flot-tick-label tickLabel" style="position: absolute; max-width: 46px; top: 573px; left: 193px; text-align: center;">-2</div><div class="flot-tick-label tickLabel" style="position: absolute; max-width: 46px; top: 573px; left: 248px; text-align: center;">-1</div></div><div class="flot-y-axis flot-y1-axis yAxis y1Axis" style="position: absolute; inset: 0px; display: block;"><div class="flot-tick-label tickLabel" style="position: absolute; top: 278px; left: 8px; text-align: right;">0</div><div class="flot-tick-label tickLabel" style="position: absolute; top: 224px; left: 8px; text-align: right;">1</div><div class="flot-tick-label tickLabel" style="position: absolute; top: 171px; left: 8px; text-align: right;">2</div><div class="flot-tick-label tickLabel" style="position: absolute; top: 117px; left: 8px; text-align: right;">3</div><div class="flot-tick-label tickLabel" style="position: absolute; top: 63px; left: 8px; text-align: right;">4</div><div class="flot-tick-label tickLabel" style="position: absolute; top: 10px; left: 8px; text-align: right;">5</div><div class="flot-tick-label tickLabel" style="position: absolute; top: 546px; left: 2px; text-align: right;">-5</div><div class="flot-tick-label tickLabel" style="position: absolute; top: 493px; left: 2px; text-align: right;">-4</div><div class="flot-tick-label tickLabel" style="position: absolute; top: 439px; left: 2px; text-align: right;">-3</div><div class="flot-tick-label tickLabel" style="position: absolute; top: 385px; left: 2px; text-align: right;">-2</div><div class="flot-tick-label tickLabel" style="position: absolute; top: 332px; left: 2px; text-align: right;">-1</div></div></div><canvas class="flot-overlay" width="600" height="600" style="direction: ltr; position: absolute; left: 0px; top: 0px; width: 600px; height: 600px;"></canvas><label class="point-label" style="position: absolute; width: 2em; line-height: 2em; text-align: center; border-radius: 50%; opacity: 0.8; background-color: rgb(237, 194, 64); display: block; left: 373.336px; top: 194.02px;">P</label><label class="point-label" style="position: absolute; width: 2em; line-height: 2em; text-align: center; border-radius: 50%; opacity: 0.8; background-color: rgb(237, 194, 64); display: block; left: 489.316px; top: 78.0405px;">Q</label><label class="point-label" style="position: absolute; width: 2em; line-height: 2em; text-align: center; border-radius: 50%; opacity: 0.8; background-color: rgb(203, 75, 75); display: block; left: 141.377px; top: 194.02px;">R</label></div>
+      <div class="box">
+        <div id="form">
+          <div id="curve-coefficients" class="parameters">
+            <p>Curve:</p>
+            <div class="parameter curve-coefficient"><label for="coefficient-a">a</label><input id="coefficient-a" name="a" value="-7" type="number" step="any"></div>
+            <div class="parameter curve-coefficient"><label for="coefficient-b">b</label><input id="coefficient-b" name="b" value="10" type="number" step="any"></div>
+          </div>
+          <div id="point-p-coordinates" class="parameters">
+            <p><em>P</em>:</p>
+            <div class="parameter point-coordinate"><label for="point-p-x">x</label><input id="point-p-x" name="px" value="1" type="number" step="any"></div>
+            <div class="parameter point-coordinate"><label for="point-p-y">y</label><input id="point-p-y" name="py" value="2" type="number" step="any"></div>
+          </div>
+          <div id="point-q-coordinates" class="parameters">
+            <p><em>Q</em>:</p>
+            <div class="parameter point-coordinate"><label for="point-q-x">x</label><input id="point-q-x" name="qx" value="3" type="number" step="any"></div>
+            <div class="parameter point-coordinate"><label for="point-q-y">y</label><input id="point-q-y" name="qy" value="4" type="number" step="any"></div>
+          </div>
+          <div id="point-r-coordinates" class="parameters">
+            <p><em>R</em> = <em>P</em> + <em>Q</em>:</p>
+            <div class="parameter point-coordinate result"><label for="point-r-x">x</label><input id="point-r-x" name="rx" step="any" readonly=""></div>
+            <div class="parameter point-coordinate result"><label for="point-r-y">y</label><input id="point-r-y" name="ry" step="any" readonly=""></div>
+          </div>
+        </div>
+        <div id="summary">
+          <p>Point addition over the elliptic curve <span class="curve-equation"><em>y</em><sup>2</sup> = <em>x</em><sup>3</sup>  - 7<em>x</em> + 10</span> in ℝ.</p>
+          <p class="curve-singular-warning" style="display: none;"><strong>Warning:</strong> this curve is singular.</p>
+        </div>
+      </div>
+    </main>
+    <script type="text/javascript">
+        $(function() {
+            $.ec.curve = new $.ec.reals.PointAddition();
+        });
+    </script>
+  </body>
+
+  
+
+</body>
+
+<grammarly-desktop-integration data-grammarly-shadow-root="true"></grammarly-desktop-integration>
+
+<style>
+	div.grammarly-desktop-integration {
+	  position: absolute;
+	  width: 1px;
+	  height: 1px;
+	  padding: 0;
+	  margin: -1px;
+	  overflow: hidden;
+	  clip: rect(0, 0, 0, 0);
+	  white-space: nowrap;
+	  border: 0;
+	  -moz-user-select: none;
+	  -webkit-user-select: none;
+	  -ms-user-select:none;
+	  user-select:none;
+	}
+  
+	div.grammarly-desktop-integration:before {
+	  content: attr(data-content);
+	}
+  </style>
+
+<div aria-label="grammarly-integration" role="group" tabindex="-1" class="grammarly-desktop-integration" data-content="{&quot;mode&quot;:&quot;full&quot;,&quot;isActive&quot;:true,&quot;isUserDisabled&quot;:false}"></div>
+
+<grammarly-desktop-integration data-grammarly-shadow-root="true"></grammarly-desktop-integration>
+</html>
